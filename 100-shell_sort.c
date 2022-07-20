@@ -1,44 +1,41 @@
 #include "sort.h"
+
 /**
- * shell_sort - function that sorts an array
- * of integers in ascending order
- * @array: input arrray
+ * shell_sort - sort array with shell method
+ * @array: array to sort
  * @size: size of the array
- * Return: no return
- */
+ *
+ * Return: nothing
+*/
+
 void shell_sort(int *array, size_t size)
 {
-	size_t n = 1;
+	int in = 0, out = 0, range = 1, aux = 0;
 
-	while (n < size)
-		n = (n * 3) + 1;
+	if (!array || size < 2)
+		return;
 
-	while ((n = (n - 1) / 3) > 0)
-		_ssort(array, size, n);
-}
-/**
- * _ssort - auxiliar function for
- * shell_sort function
- * @a: input arrray
- * @size: size of the array
- * @n: intervale
- * Return: no return
- */
-void _ssort(int *a, int size, int n)
-{
-	int tmp, i, j;
+	while (range < (int) size / 3)
+		range = range * 3 + 1;
 
-	for (i = 0; (i + n) < size; i++)
+	while (range > 0)
 	{
-		for (j = i + n; (j - n) >= 0; j = j - n)
+		out = range;
+		while (out < (int) size)
 		{
-			if (a[j] < a[j - n])
+			aux = array[out];
+			in = out;
+
+			while (in > range - 1 && array[in - range] >= aux)
 			{
-				tmp = a[j];
-				a[j] = a[j - n];
-				a[j - n] = tmp;
+				array[in] = array[in - range];
+				in = in - range;
 			}
+
+			array[in] = aux;
+			out++;
 		}
+		print_array(array, size);
+		range = (range - 1) / 3;
 	}
-	print_array(a, size);
 }
