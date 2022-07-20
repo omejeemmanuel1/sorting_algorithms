@@ -1,4 +1,4 @@
-#include "deck.h"
+#include "sort.h"
 
 /**
  * sort_deck -
